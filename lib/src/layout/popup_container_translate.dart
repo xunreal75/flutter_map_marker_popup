@@ -202,7 +202,19 @@ abstract class PopupContainerTransform {
     MapCamera mapCamera,
     PopupSpec popupSpec,
   ) {
-    return mapCamera.project(popupSpec.markerPoint) -
-        mapCamera.pixelOrigin.toDoublePoint();
+    //old impl
+    // Point<double> project(LatLng latlng, [double? zoom]) =>
+    //    crs.latLngToPoint(latlng, zoom ?? this.zoom);
+
+    /*return mapCamera.project(popupSpec.markerPoint) -
+        mapCamera.pixelOrigin.toDoublePoint();*/
+
+    var point1 =
+        mapCamera.crs.latLngToOffset(popupSpec.markerPoint, mapCamera.zoom);
+    var point2 = mapCamera.pixelOrigin;
+    var diffX = point1.dx - point2.dx;
+    var diffY = point1.dy - point2.dy;
+
+    return Point(diffX, diffY);
   }
 }

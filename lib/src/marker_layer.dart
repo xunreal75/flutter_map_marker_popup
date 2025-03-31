@@ -72,18 +72,23 @@ class _MarkerLayerState extends State<MarkerLayer>
             final bottom = m.height - top;
 
             // Perform projection
-            final pxPoint = map.project(m.point);
-
+            final xyoffset = map.crs.latLngToOffset(m.point, map.zoom);
+            final pxPoint = Point(xyoffset.dx, xyoffset.dy);
+            //LatLng(latitude:44.421, longitude:10.404)
+            //Point(4332.7488, 2965.4072216390546)
             // Cull if out of bounds
-            if (!map.pixelBounds.containsPartialBounds(
-              Bounds(
-                Point(pxPoint.x + left, pxPoint.y - bottom),
-                Point(pxPoint.x - right, pxPoint.y + top),
+            if (!map.pixelBounds.overlaps(
+              Rect.fromPoints(
+                Offset(pxPoint.x + left, pxPoint.y - bottom),
+                Offset(pxPoint.x - right, pxPoint.y + top),
               ),
-            )) continue;
+            )) {
+              continue;
+            }
 
             // Apply map camera to marker position
-            final pos = Point(pxPoint.x - map.pixelOrigin.x, pxPoint.y - map.pixelOrigin.y);
+            final pos = Point(
+                pxPoint.x - map.pixelOrigin.dx, pxPoint.y - map.pixelOrigin.dy);
 
             var markerChild = m.child;
             if (widget.layerOptions.selectedMarkerBuilder != null &&

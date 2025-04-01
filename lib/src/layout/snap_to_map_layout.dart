@@ -45,8 +45,13 @@ abstract class SnapToMapLayout {
     );
   }
 
-  static Point<double> _sizeChangeDueToRotation(MapCamera mapCamera) =>
-      mapCamera.size - mapCamera.nonRotatedSize;
+  static Point<double> _sizeChangeDueToRotation(MapCamera mapCamera) {
+    var mapCameraSize = mapCamera.size;
+    var mapCameraNonRotatedSize = mapCamera.nonRotatedSize;
+    var newX = mapCameraSize.width - mapCameraNonRotatedSize.width;
+    var newY = mapCameraSize.height - mapCameraNonRotatedSize.height;
+    return Point<double>(newX, newY);
+  }
 
   static PopupLayout _layoutWith({
     required Alignment contentAlignment,

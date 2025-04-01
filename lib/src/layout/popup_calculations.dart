@@ -67,14 +67,14 @@ abstract class PopupCalculations {
     MapCamera mapCamera,
     Point<num> point,
   ) {
-    return -(mapCamera.size.x - point.x).toDouble();
+    return -(mapCamera.size.width - point.x).toDouble();
   }
 
   static double mapCenterToPointX(
     MapCamera mapCamera,
     Point<num> point,
   ) {
-    return -(mapCamera.size.x / 2 - point.x).toDouble();
+    return -(mapCamera.size.width / 2 - point.x).toDouble();
   }
 
   static double mapTopToPointY(
@@ -88,13 +88,13 @@ abstract class PopupCalculations {
     MapCamera mapCamera,
     Point<num> point,
   ) {
-    return -(mapCamera.size.y - point.y).toDouble();
+    return -(mapCamera.size.height - point.y).toDouble();
   }
 
   static double mapCenterToPointY(
     MapCamera mapCamera,
     Point<num> point,
   ) {
-    return -(mapCamera.size.y / 2 - point.y).toDouble();
+    return -(mapCamera.size.height / 2 - point.y).toDouble();
   }
 }
